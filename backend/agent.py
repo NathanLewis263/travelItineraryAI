@@ -1,27 +1,13 @@
-import os
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from models import ItineraryRequest, ItineraryResponse, DayPlan, Attraction
-from langchain_google_community import GooglePlacesTool
 import json
-
-# Ensure API keys are set in environment variables
-# OPENAI_API_KEY
-# GPLACES_API_KEY or GOOGLE_API_KEY for Google Places
 
 async def generate_itinerary_agent(request: ItineraryRequest) -> ItineraryResponse:
     # Initialize LLM
-    # Initialize LLM based on environment variable
-    
     llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", temperature=0.7)
 
-    
-    # Initialize Tools
-    # Note: For this demo, we might mock the actual tool call if credentials aren't set, 
-    # but the structure is here. 
-    # places = GooglePlacesTool() 
-    
     # Construct the Prompt
     prompt = ChatPromptTemplate.from_messages([
         ("system", """
@@ -67,5 +53,4 @@ async def generate_itinerary_agent(request: ItineraryRequest) -> ItineraryRespon
     })
     
     # Validate and return
-    # The parser should already handle this, but we cast it to our model to be sure
     return ItineraryResponse(**response)
